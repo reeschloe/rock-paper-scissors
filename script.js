@@ -1,75 +1,67 @@
 let choices = ["Rock","Paper","Scissors"]
-
+let tie = 0, win = 0, lose = 0
 function computerPlay() {
     randChoice = choices[Math.floor(Math.random() * choices.length)]
     return randChoice
 }
 
-function camelCase(string) {
-    str1 = string.charAt(0).toUpperCase()
-    str2 = string.slice(1).toLowerCase()
-    return str1 + str2
-}
-
-function playRound(playerSelection, computerSelection) {
+function playRound(playerSelection) {
+    computerSelection = computerPlay()
     if (computerSelection === playerSelection) {
-        return "tie"
+        tie = tie + 1
+        stringResult = "You tie!"
     }
     else if (computerSelection === "Rock") {
         if (playerSelection === "Paper") {
-            return "win"
+            win = win + 1
+            stringResult = "You win!"
         }
         else if (playerSelection === "Scissors") {
-            return "lose"
+            lose = lose + 1
+            stringResult = "You lose!"
         }
     }
     else if (computerSelection === "Paper") {
         if (playerSelection === "Scissors") {
-            return "win"
+            win = win + 1
+            stringResult = "You win!"
         }
         else if (playerSelection === "Rock") {
-            return "lose"
+            lose = lose + 1
+            stringResult = "You lose!"
         }
     }
     else if (computerSelection === "Scissors") {
         if (playerSelection === "Paper") {
-            return "lose"
+            lose = lose + 1
+            stringResult = "You lose!"
         }
         else if (playerSelection === "Rock") {
-            return "win"
-        }
-    }
-}
-
-function game() {
-    let tie = 0, win = 0, lose = 0
-    for (let i = 1; i < 6; i++) {
-        playerSelection = camelCase(prompt("Rock, Paper, or Scissors?"))
-        computerSelection = computerPlay()
-        result = playRound(playerSelection, computerSelection);
-        if (result === "tie") {
-            tie = tie + 1
-            stringResult = "You tie!"
-        }
-        else if (result === "win") {
             win = win + 1
-            stringResult = "You win! " + playerSelection + " beats " + computerSelection + "!"
+            stringResult = "You win!"
         }
-        else {
-            lose = lose + 1
-            stringResult = "You lose! " + computerSelection + " beats " + playerSelection + "!"
-        }
-        sumOfResults = "Wins: " + win + ". Losses: " + lose + ". Ties: " + tie + "."
-        console.log(stringResult)
-        console.log(sumOfResults)
     }
-    if (win > lose) {
-        return "You win!"
+    sumOfResults = "Wins: " + win + ". Losses: " + lose + ". Ties: " + tie + "."
+    div.innerHTML = "Your selection: " + playerSelection + ".<br>" + "Computer selection: " + computerSelection + ".<br>" + stringResult + "<br>" + sumOfResults
+    if (win === 5) {
+        div.innerHTML = "Your selection: " + playerSelection + ".<br>" + "Computer selection: " + computerSelection + ".<br>" + stringResult + "<br>" + sumOfResults + "<br> 5 wins! You win the game!"
     }
-    else if (lose > win) {
-        return "You lose!"
-    }
-    else {
-        return "It's a tie!"
+    if (lose === 5) {
+        div.innerHTML = "Your selection: " + playerSelection + ".<br>" + "Computer selection: " + computerSelection + ".<br>" + stringResult + "<br>" + sumOfResults + "<br> 5 losses! You lose the game!"
     }
 }
+const body = document.querySelector('body')
+const div = document.createElement('div')
+body.appendChild(div)
+
+
+const rock = document.getElementById('rock')
+rock.addEventListener("click", () => playRound("Rock"))
+
+const paper = document.getElementById('paper')
+paper.addEventListener("click", () => playRound("Paper"))
+
+const scissors = document.getElementById('scissors')
+scissors.addEventListener("click", () => playRound("Scissors"))
+
+
